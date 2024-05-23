@@ -12,9 +12,8 @@ const menuPrices = {
     "Tiramisu" : 12,
     "Cheesecake" : 25
 }
-const menuPricesArr = Object.entries(menuPrices)
-console.log(menuPricesArr)
-// Function to display menu items by category
+
+
 function displayMenuItems(menu) {
     // Get the menu container element from the HTML
     const menuEl = document.getElementById("menu")
@@ -24,6 +23,7 @@ function displayMenuItems(menu) {
     const menuItem = Object.values(menu) 
     
     
+    
 
         // Create an element to represent the category
 
@@ -31,16 +31,16 @@ function displayMenuItems(menu) {
     for (i = 0 ; i < menuCategory.length; i++) {
         const categoryEl = document.createElement("h1")
         const listEl = document.createElement("ul")
-        if (menuCategory[i]== "Starters"){
+        categoryEl.textContent = menuCategory[i]
+
+        if (menuCategory[i] == "Starters"){
             listEl.setAttribute("id","starters" )
-        }else if (menuCategory[i]== "MainCourses"){
+        }else if (menuCategory[i] == "MainCourses"){
             listEl.setAttribute("id","main-courses" )
-        }else if (menuCategory[i]== "Desserts"){
+        }else if (menuCategory[i] == "Desserts"){
             listEl.setAttribute("id","desserts" )
         }
         
-        
-        categoryEl.textContent = menuCategory[i]
         
         menuEl.append(categoryEl)
         //console.log(`${menuEl} i${i} `)
@@ -56,11 +56,7 @@ function displayMenuItems(menu) {
     const dessertsEl = document.getElementById("desserts")
 
         // Create an element to represent a list of items
-    const listEl = document.createElement("ul")
-    //const startersList = menuEl.appendChild(listEl)
-    
-    const MainCoursesList = menuEl.appendChild(listEl)
-    const DessertsList = menuEl.appendChild(listEl)
+   
     for (i = 0; i < menuItem.length ; i++) {
         for (let x = 0; x < menuItem[i].length; x++){
             const itemEl = document.createElement("li")
@@ -68,7 +64,7 @@ function displayMenuItems(menu) {
             let itemSnapShot = menuItem[i][x]
             itemEl.addEventListener("click", function() {
                 addToOrder(itemEl)
-                console.log(itemEl)
+                //console.log(itemEl.textContent)
         })
 
             //console.log(`${itemSnapShot} i:${i} x:${x}`)
@@ -95,6 +91,7 @@ function displayMenuItems(menu) {
 
             // Append the list item to the list of items           
 }
+let total = 0;
 
 
 // Callback function for adding an item to the order
@@ -109,10 +106,18 @@ function addToOrder(itemName) {
     // Set the text content of the list item to the item name
     // Append the list item to the order items list
     // Calculate and update the total price
-
+    const items = Object.keys(menuPrices)
+    const itemPrices = Object.values(menuPrices)
+   // console.log(itemPrices)
    
-    // Update the text content of the order total element with the new total
+   for (i = 0; i < itemPrices.length ; i++) {
+        if (items[i] == itemName.textContent) {
+              total += itemPrices[i];
+            }
+    }
+    orderTotal.textContent = total
 }
+// Update the text content of the order total element with the new total
 
 // Function to initialize the menu system
 function initMenuSystem(menu) {
